@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Interaction</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* Custom styles for the chatbot interface */
+        .chat-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .chat-box {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #fff;
+        }
+        .user-message {
+            text-align: right;
+            color: #007bff;
+        }
+        .bot-message {
+            text-align: left;
+            color: #333;
+        }
+        .input-box {
+            display: flex;
+            margin-top: 10px;
+        }
+        .input-box input[type="text"] {
+            flex-grow: 2;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .input-box button {
+            flex-grow: 1;
+            padding: 10px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        /* Styling for the interaction panel */
+        .interaction-panel {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        .interaction-panel h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .interaction-options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .interaction-option {
+            flex-basis: calc(33.33% - 10px);
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .interaction-option:hover {
+            background-color: #555;
+        }
+        /* Dark mode icon */
+        .dark-mode-icon {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Chat container -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 chat-container">
+                <h1>Chatbot</h1>
+                <div class="chat-box">
+                    <!-- Chat messages go here -->
+                </div>
+                <div class="input-box">
+                    <input type="text" id="user-input" placeholder="Type your message...">
+                    <button id="send-button">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interaction panel -->
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 interaction-panel">
+                <h2>Interaction Panel</h2>
+                <div class="interaction-options">
+                    <div class="interaction-option">
+                        <i class="fas fa-phone fa-3x"></i>
+                        <p>Switch to Call</p>
+                    </div>
+                    <div class="interaction-option">
+                        <i class="fas fa-video fa-3x"></i>
+                        <p>Switch to Video</p>
+                    </div>
+                    <div class="interaction-option">
+                        <i class="fas fa-user fa-3x"></i>
+                        <p>Profile</p>
+                    </div>
+                    <div class="interaction-option">
+                        <i class="fas fa-moon fa-3x dark-mode-icon" id="dark-mode-toggle"></i>
+                        <p>Dark Mode</p>
+                    </div>
+                    <div class="interaction-option">
+                        <i class="fas fa-sign-out-alt fa-3x"></i>
+                        <p>Logout</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap and jQuery JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

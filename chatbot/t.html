@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Default Light Mode */
+        body {
+            background-color: #fff;
+            color: #000;
+        }
+
+        /* Dark Mode Styles */
+        .dark-mode{
+            background-color: #46424a !important;
+            color: #fff !important;
+        }
+
+        .material-symbols-outlined {
+          font-variation-settings:
+          'FILL' 0,
+          'wght' 400,
+          'GRAD' 0,
+          'opsz' 24
+        }
+    
+        .toggle:hover{
+            cursor: pointer;
+        }
+
+        .chat-container {
+            height: 100%;
+            width: 66.67%; /* 2/3 of the screen */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Align the content at the top */
+            align-items: center;
+            margin: 0 auto; /* Center the container horizontally */
+        }
+    
+        .chat-card {
+            width: 100%;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            padding-top: 10px;
+            margin-top: 10px;
+            overflow-y: auto;
+            max-height: calc(100% - 80px);
+        }
+    
+        .chat-header {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+            color: inherit;
+            font-weight: bold;
+        }
+
+        .chat-header {
+            position: absolute;
+            margin-left: 20px;
+            padding-left: 30px;
+            padding-top: 25px;
+            padding-bottom: 15px;
+            right: 0;
+            top: 0;
+            border-bottom: linen;
+        }
+        .chat-header:hover{
+            border-style: dotted;
+            border-top: hidden;
+            border-left: hidden;
+            border-right: hidden;
+            background-color: 0 0 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+    
+        .chat-title {
+            font-size: 20px;
+            margin: 10px;
+        }
+    
+        .chat-option:hover {
+            text-decoration: underline;
+        }
+    
+        .chat-body {
+            flex: 1;
+            overflow-y: auto;
+            padding-top: 40px;
+            margin-top: 30px;
+        }
+    
+        .message {
+            margin-bottom: 20px;
+            display: flow-root;
+        }
+    
+        .message-sender {
+            padding: 5px;
+            font-weight: bold;
+            color: #007bff;
+        }
+    
+        .message-content {
+            border-radius: 5px;
+            padding: 10px;
+            word-wrap: break-word;
+            width: 80%;
+            background-color: inherit;
+        }
+    
+        .user-message {
+            align-self: flex-end;
+            text-align: right;
+            border-radius: 2px;
+            background: linear-gradient(to left, grey,rgb(97, 104, 98));
+            padding-right: 20px;
+             /* User message background color */
+            
+        }
+    
+        .bot-message {
+            align-self: flex-start;
+            text-align: left;
+            padding-left: 20px;
+            background: linear-gradient(to right, grey,rgb(124, 109, 109));
+        }
+    
+        .message-form {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: inherit;
+            border-top: 1px solid #ccc;
+        }
+    
+        .message-input-container {
+            flex-grow: 2;
+            display: flex;
+            align-items: center;
+            border: none;
+            background-color: inherit;
+        }
+    
+        .message-input {
+            flex-grow: 1;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            color: #ccc;
+            background-color: inherit;
+        }
+    
+        .send-icon {
+            background-color: #191b1c;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 10px;
+        }
+    
+        .send-icon:hover {
+            background-color: #9bc9f7;
+        }
+        
+        /* Additional CSS to place the form at the bottom */
+        .chat-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: inherit;
+            padding: 10px;
+            z-index: 2;
+            border: none;
+        }
+
+        /* Navigation Menu */
+        .navigation-menu {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .navigation-option {
+            color: inherit;
+            text-decoration: none;
+            font-size: 18px;
+            display: flex;
+            padding-right: 20px;
+            align-items: center;
+        }
+
+        .navigation-option:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <title>Chat</title>
+    
+
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-card">
+            <div class="chat-header">
+                <div class="chat-title">Let's Chat</div>
+                <div class="navigation-menu">
+                    <a href="#" class="navigation-option"><i class="fas fa-phone">  call</i></a>
+                    <a href="#" class="navigation-option"><i class="fas fa-video">Video</i></a>
+                    <a href="#" class="navigation-option"><i class="fas fa-user">Profile</i></a>
+                    <a href="#" class="navigation-option"><i class="fas fa-sign-out-alt">Log out</i></a>
+                </div>
+            </div>
+            <div class="chat-body">
+                <ul class="messages-stack">
+                    <li class="message bot-message">
+                        <div class="message-sender">AI Bot</div>
+                        <div class="message-content">Hi, how can I assist you today?</div>
+                    </li>
+                    <li class="message user-message">
+                        <div class="message-sender">You</div>
+                        <div class="message-content">Hello, I have a question.</div>
+                    </li>
+                    <!-- More messages can be added here -->
+                </ul>
+            </div>
+        </div>
+        <div class="chat-footer">
+            <form class="message-form">
+                <div class="message-input-container">
+                    <input type="text" class="form-control message-input" placeholder="Type your message...">
+                    <div class="toggle">
+                        <span class="material-symbols-outlined">
+                          toggle_on
+                        </span>
+                    </div>
+                    <div class="send-icon" id="sendIcon">
+                        <i class="fab fa-telegram"></i>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        const messagesList = document.querySelector('.messages-stack');
+        const messageForm = document.querySelector('.message-form');
+        const messageInput = document.querySelector('.message-input');
+        const sendIcon = document.querySelector('#sendIcon');
+      
+        
+        function handleSubmit(event) {
+          event.preventDefault();
+      
+          const message = messageInput.value.trim();
+          if (message.length === 0) {
+            return;
+            }
+      
+          const messageItem = document.createElement('li');
+          messageItem.classList.add('message', 'sent');
+          messageItem.innerHTML = `
+              <div class="message user-message">
+                  <div class="message-sender">
+                      <b>You</b>
+                  </div>
+                  <div class="message-content">
+                      ${message}
+                  </div>
+              </div>`;
+          messagesList.appendChild(messageItem);
+      
+          messageInput.value = '';
+          messagesList.scrollTop = messagesList.scrollHeight;
+      
+          fetch('', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({
+              'csrfmiddlewaretoken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+              'message': message
+            })
+            })
+            .then(response => response.json())
+            .then(data => {
+              const response = data.response;
+              const messageItem = document.createElement('li');
+              messageItem.classList.add('message', 'received');
+              messageItem.innerHTML = `
+              <div class="message bot-message">
+                  <div class="message-sender">
+                    <b>AI Psychiatrist</b>
+                  </div>
+                  <div class="message-content">
+                      ${response}
+                  </div>
+              </div>
+                `;
+              messagesList.appendChild(messageItem);
+              messagesList.scrollTop = messagesList.scrollHeight; 
+            });
+        };
+      
+        messageForm.addEventListener('submit', handleSubmit);
+        sendIcon.addEventListener('click', handleSubmit)
+
+    </script>
+
+</body>
+</html>
+<script>
+    // JavaScript to toggle dark mode based on user preference
+    $(document).ready(function() {
+        const darkModeToggle = $(".material-symbols-outlined");
+        const body = $("body");
+        const isDarkMode = localStorage.getItem("darkMode");
+
+        // Function to toggle dark mode
+        function toggleDarkMode() {
+            if (body.hasClass("dark-mode")) {
+                body.removeClass("dark-mode");
+                localStorage.setItem("darkMode", "false");
+            } else {
+                body.addClass("dark-mode");
+                localStorage.setItem("darkMode", "true");
+            }
+        }
+
+        // Set initial dark mode state based on user preference
+        if (isDarkMode === "true") {
+            toggleDarkMode();
+        }
+
+        // Toggle dark mode when the button is clicked
+        darkModeToggle.click(function() {
+            toggleDarkMode();
+        });
+    });
+</script>

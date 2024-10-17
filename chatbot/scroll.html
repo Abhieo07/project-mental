@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll Between Divs with Delay</title>
+    <style>
+        .content {
+            display: none;
+            height: 100vh;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        #div1 {
+            display: block; /* Initially visible */
+            background-color: lightblue;
+        }
+
+        #div2 {
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+<body>
+    <div id="div1" class="content"><h1>Content 1</h1></div>
+    <div id="div2" class="content"><h1>Content 2</h1></div>
+
+    <script>
+        const div1 = document.getElementById('div1');
+        const div2 = document.getElementById('div2');
+        let scrollTimeout;
+
+        function toggleDivsWithDelay() {
+            clearTimeout(scrollTimeout); 
+            scrollTimeout = setTimeout(() => {
+                if (window.scrollY === 0) {
+                    div1.style.display = 'block';
+                    div2.style.display = 'none';
+                } else {
+                    div1.style.display = 'none';
+                    div2.style.display = 'block';
+                }
+            }, 300); 
+        }
+
+        toggleDivsWithDelay();
+
+        window.addEventListener('scroll', toggleDivsWithDelay);
+    </script>
+</body>
+</html>

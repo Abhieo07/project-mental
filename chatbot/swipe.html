@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swipe Between Divs</title>
+    <style>
+        .content {
+            display: none;
+            height: 100vh;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        #div1 {
+            display: block; /* Initially visible */
+            background-color: lightblue;
+        }
+
+        #div2 {
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+<body>
+    <div id="div1" class="content"><h1>Content 1</h1></div>
+    <div id="div2" class="content"><h1>Content 2</h1></div>
+
+    <script>
+        const div1 = document.getElementById('div1');
+        const div2 = document.getElementById('div2');
+        let startY;
+        let isDragging = false;
+
+        function handleStart(event) {
+            isDragging = true;
+            startY = event.clientY || event.touches[0].clientY;
+        }
+
+        function handleMove(event) {
+            if (!isDragging) return;
+            const currentY = event.clientY || event.touches[0].clientY;
+            const deltaY = currentY - startY;
+
+            if (deltaY < -50) {
+                // Swipe up: Show div2, hide div1
+                div1.style.display = 'none';
+                div2.style.display = 'block';
+                isDragging = false;
+            } else if (deltaY > 50) {
+                // Swipe down: Show div1, hide div2
+                div1.style.display = 'block';
+                div2.style.display = 'none';
+                isDragging = false;
+            }
+        }
+
+        function handleEnd() {
+            isDragging = false;
+        }
+
+        document.addEventListener('mousedown', handleStart);
+        document.addEventListener('touchstart', handleStart);
+        document.addEventListener('mousemove', handleMove);
+        document.addEventListener('touchmove', handleMove);
+        document.addEventListener('mouseup', handleEnd);
+        document.addEventListener('touchend', handleEnd);
+    </script>
+</body>
+</html>

@@ -1,0 +1,234 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block styles %}
+<style>
+    body {
+        font-family: 'Cinzel', serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .login-container {
+        border-radius: 10px;
+        padding: 20px;
+        padding-top: 30px;
+        text-align: center;
+        max-width: 415px;
+        width: 100%;
+        z-index: 2;
+    }
+
+    .login-container h1 {
+        margin-bottom: 20px;
+    }
+
+    .form {
+        z-index: 3;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 15px;
+        border: 1px solid #ccc;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .btn {
+        background: #333;
+        color: #fff;
+        border: none;
+        padding: 12px 65px;
+        border-radius: 3px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+        background: #555;
+    }
+
+    p {
+        font-family: 'Roboto', sans-serif;
+        padding-top: 10px;
+        font-weight: 500;
+    }
+
+    .container {
+        position: relative;
+        display: inline-block;
+        z-index: 3;
+    }
+
+    .big-text {
+        font-size: 58px;
+        font-stretch: expanded;
+        width: 100%;
+        color: #336121;
+        font-weight: bolder;
+        font-family: 'Volkhorn', serif;
+        line-height: 2.2;
+        z-index: 1; /* Ensure the big text is behind other elements */
+    }
+
+    .i-can-fix-u {
+        display: inline-block;
+        transform: scaleY(3.2) scaleX(1.17) translate(0,-20%);
+        max-height: 80px;
+    }
+
+    .small-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scaleX(1.25); /* Horizontal stretch */
+        font-size: 12px; /* Match the font size of the big text */
+        font-stretch: extra-expanded; /* Expand the font horizontally */
+        color: #183B11;
+        z-index: 2; /* Ensure the small text is in front of other elements */
+    }
+
+    .content {
+        display: none;
+        height: 100vh;
+        text-align: center;
+        margin-top: 40px;
+        padding-top: 40px;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+    }
+
+    #div1 {
+        display: block;
+    }
+
+    #div2 {
+        display: none;
+    }
+    #carousel-inner{ 
+        width: 670.4px;
+        height: 400px;
+    }
+    .carousel-caption h5, p{
+        color: black;
+        font-weight: bolder;
+    }
+    .carousel-indicators{
+        background-color: inherit;
+        color: #333;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const div1 = document.getElementById('div1');
+        const div2 = document.getElementById('div2');
+        let isDiv1Visible = true;
+        let scrollTimeout;
+
+        document.addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout); 
+            scrollTimeout = setTimeout(() => {
+                if (isDiv1Visible && window.scrollY > 0) {
+                    isDiv1Visible = false;
+                    div1.style.display = 'none';
+                    div2.style.display = 'block';
+                } else if (!isDiv1Visible && window.scrollY === 0) {
+                    isDiv1Visible = true;
+                    div2.style.display = 'none';
+                    div1.style.display = 'block';
+                }
+            }, 300); 
+        });
+    });
+</script>
+
+<div id="div1" class="content">
+    <div class="login-container">
+        <div class="container">
+            <div class="big-text">
+                <b class="i-can-fix-u">I CAN FIX U</b>
+            </div>
+            <p class="small-text">ONLY YOU CAN FIX YOURSELF</p>
+        </div>
+        <hr style="display: flex; background-color: rgb(126, 126, 124);"><br>
+        <h3>Login</h3>
+        {% if error_message %}
+            <div class="alert alert-danger" role="alert" style="font-family: 'Roboto', sans-serif;">{{ error_message }}</div>
+        {% endif %}
+        <div class="form">
+            <form action="#" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="text" name="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn">Login</button>
+                <div class="form-group">
+                    <p class="text-base"> Not registered? <a href="/register" class=""> Create an account </a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="div2" class="content">
+    <h5>No one can fix you unless you dare.</h5>
+    <p>You control your mind.<br> Don't let your mind control you.<br> Key to having healthy life is not always having healthy body.</p>
+    <h1>Therapist with you</h1>
+    
+    <div id="carouselVideoSlides" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselVideoSlides" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselVideoSlides" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselVideoSlides" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>        
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <video width="670" height="400" autoplay>
+                <source src="media/chats.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="carousel-caption d-none d-md-block">
+                <h5>interaction</h5>
+                <p>One - One interaction whichever meadium you'd like.</p>
+              </div>    
+          </div>
+          <div class="carousel-item">
+            <video width="670" height="400" autoplay>
+                <source src="media\register.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Second slide label</h5>
+                <p>Some representative placeholder content for the first slide.</p>
+            </div>        
+          </div>
+          <div class="carousel-item">
+            <video width="670" height="400" autoplay>
+                <source src="media\login.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Third slide label</h5>
+                <p>Some representative placeholder content for the first slide.</p>
+            </div>        
+          </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
